@@ -1,0 +1,16 @@
+:root {
+  color-scheme: light;
+  --paper: #f5f7f4;
+  --surface: #ffffff;
+  --ink: #101412;
+  --muted: #59625d;
+  --line: #c8cfca;
+  --forest: #15382d;
+  --forest-soft: #d9e8df;
+  --signal: #d9362b;
+  --steel: #315d77;
+  --focus: #1667d9;
+  --max-width: 1200px;
+  --header-height: 72px;
+  --radius: 6px;
+}
