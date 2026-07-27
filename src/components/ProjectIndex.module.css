@@ -1,0 +1,13 @@
+.section { max-width: var(--max-width); margin: 0 24px; padding: 104px 0; }
+.title { display: grid; grid-template-columns: 150px 1fr; gap: 24px; align-items: end; margin-bottom: 38px; }
+.title p { margin: 0; color: var(--signal); font: 700 12px/1.2 ui-monospace, monospace; }
+.title h2 { margin: 0; font: 600 46px/1.05 Georgia, "Songti SC", serif; }
+.list { border-top: 1px solid var(--ink); }
+.list article { display: grid; grid-template-columns: 64px 1fr 1fr; gap: 24px; padding: 28px 0; border-bottom: 1px solid var(--line); }
+.list h3 { margin: 0 0 8px; font-size: 21px; }
+.list p { margin: 0; color: var(--muted); }
+.list small { display: block; margin-top: 12px; color: var(--steel); }
+.list ul { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 0; padding: 0; list-style: none; font-size: 12px; }
+.list li { padding: 4px 7px; border: 1px solid var(--line); border-radius: 4px; }
+@media (min-width: 1248px) { .section { margin-left: auto; margin-right: auto; } }
+@media (max-width: 760px) { .section { margin-left: 16px; margin-right: 16px; padding: 72px 0; } .title { grid-template-columns: 1fr; gap: 8px; } .title h2 { font-size: 36px; } .list article { grid-template-columns: 36px 1fr; } .list article > div:last-child { grid-column: 2; } }

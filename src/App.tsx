@@ -2,7 +2,10 @@ import { useState } from 'react'
 import { Hero } from './components/Hero'
 import { FeaturedCaseStudy } from './components/FeaturedCaseStudy'
 import { MediaViewer } from './components/MediaViewer'
+import { ProjectIndex } from './components/ProjectIndex'
+import { AboutContact } from './components/AboutContact'
 import { SiteHeader } from './components/SiteHeader'
+import { SiteFooter } from './components/SiteFooter'
 import { portfolioData } from './content/portfolio'
 import type { FeaturedProject } from './content/types'
 
@@ -29,7 +32,10 @@ export default function App() {
             <FeaturedCaseStudy key={project.id} project={project} index={index} onOpenMedia={(project, visualIndex, trigger) => setSelection({ project, visualIndex, trigger })} />
           ))}
         </section>
+        <ProjectIndex projects={portfolioData.compactProjects} />
+        <AboutContact data={portfolioData} />
       </main>
+      <SiteFooter person={portfolioData.person} />
       {selection && <MediaViewer project={selection.project} initialIndex={selection.visualIndex} onClose={closeViewer} />}
     </>
   )
