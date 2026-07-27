@@ -10,6 +10,7 @@ type HeroProps = {
 export function Hero({ person, metrics }: HeroProps) {
   return (
     <section className={styles.hero} aria-labelledby="hero-title">
+      <p className={styles.identity}>{person.name}</p>
       <p className={styles.eyebrow}>AI APPLICATION ENGINEER · RAG · AGENT</p>
       <h1 id="hero-title">{person.headline}</h1>
       <p className={styles.introduction}>{person.introduction}</p>

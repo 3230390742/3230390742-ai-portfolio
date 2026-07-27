@@ -32,4 +32,16 @@ describe('MediaViewer', () => {
       </StrictMode>,
     )).not.toThrow()
   })
+
+  it('keeps the video poster and explains when playback fails', () => {
+    const { container } = render(<MediaViewer project={portfolioData.featuredProjects[0]} initialIndex={2} onClose={vi.fn()} />)
+
+    const video = container.querySelector('video')
+    expect(video).not.toBeNull()
+    fireEvent.error(video!)
+
+    const dialog = container.querySelector('dialog')!
+    expect(dialog.querySelector('img')).toHaveAttribute('src', '/media/projects/personal-rag-ai-research.png')
+    expect(dialog.querySelector('[role="status"]')).toHaveTextContent(/\S/)
+  })
 })

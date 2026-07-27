@@ -6,4 +6,4 @@
 .resume { display: inline-flex; align-items: center; gap: 7px; }
 .resume svg { width: 16px; }
 .menuButton { display: none; width: 44px; height: 44px; place-items: center; border: 0; background: transparent; }
-@media (max-width: 760px) { .header { padding: 0 16px; } .menuButton { display: grid; } .navigation { display: none; } .navigationOpen { position: absolute; left: 0; right: 0; top: var(--header-height); padding: 20px 16px 28px; display: grid; gap: 0; border-bottom: 1px solid var(--line); background: var(--paper); } .navigationOpen a { min-height: 48px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--line); } }
+@media (max-width: 760px) { .header { padding: 0 16px; } .menuButton { display: grid; } .navigation { display: none; } .navigationOpen { position: absolute; left: 0; right: 0; top: var(--header-height); padding: 20px 16px 28px; display: grid; gap: 0; border-bottom: 1px solid var(--line); background: var(--paper); } .compact .navigationOpen { top: 60px; } .navigationOpen a { min-height: 48px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--line); } }

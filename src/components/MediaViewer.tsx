@@ -44,11 +44,13 @@ export function MediaViewer({ project, initialIndex, onClose }: { project: Featu
         <button type="button" aria-label="关闭媒体" title="关闭媒体" onClick={onClose}><X aria-hidden="true" /></button>
       </div>
       <div className={styles.stage}>
-        {mediaFailed
+        {mediaFailed && current.kind === 'video'
+          ? <div className={styles.fallback}><img src={current.poster} alt={current.title} /><span role="status">媒体暂不可用，请查看项目文字与证据。</span></div>
+          : (mediaFailed
           ? <div className={styles.fallback} role="img" aria-label="媒体加载失败"><strong>{current.kind === 'image' ? current.caption : current.title}</strong><span>媒体暂不可用，请查看项目文字与证据。</span></div>
           : current.kind === 'image'
             ? <img src={current.src} alt={current.alt} onError={() => setMediaFailed(true)} />
-            : <video src={current.src} poster={current.poster} title={current.title} controls muted playsInline preload="metadata" onError={() => setMediaFailed(true)} />}
+            : <video src={current.src} poster={current.poster} title={current.title} controls muted playsInline preload="metadata" onError={() => setMediaFailed(true)} />)}
       </div>
       {media.length > 1 && <div className={styles.navigation}>
         <button type="button" aria-label="上一个媒体" title="上一个媒体" onClick={previous}><ChevronLeft aria-hidden="true" /></button>

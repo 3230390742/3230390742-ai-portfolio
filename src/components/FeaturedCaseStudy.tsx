@@ -23,7 +23,7 @@ function ProjectThumbnail({ visual }: { visual: OpenableVisual }) {
       alt={visual.kind === 'image' ? visual.alt : ''}
       width="1440"
       height="900"
-      loading="lazy"
+      loading="eager"
       onError={() => setFailed(true)}
     />
   )
