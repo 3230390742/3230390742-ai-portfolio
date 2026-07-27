@@ -1,0 +1,12 @@
+.dialog { width: calc(100vw - 32px); max-width: 1120px; max-height: calc(100vh - 32px); padding: 0; border: 1px solid var(--line); border-radius: var(--radius); background: var(--ink); color: white; }
+.dialog::backdrop { background: rgb(8 12 10 / 82%); }
+.toolbar { min-height: 60px; display: flex; align-items: center; justify-content: space-between; gap: 16px; padding: 8px 12px 8px 20px; }
+.toolbar p { margin: 0; font-size: 13px; }
+.toolbar button, .navigation button { width: 44px; height: 44px; display: grid; place-items: center; border: 1px solid #4a5550; border-radius: 4px; background: transparent; color: white; }
+.stage { min-height: 260px; display: grid; place-items: center; background: #050706; }
+.stage img, .stage video { max-width: 100%; max-height: calc(100vh - 170px); object-fit: contain; }
+.fallback { min-height: 280px; display: grid; place-content: center; gap: 8px; padding: 24px; text-align: center; }
+.fallback span { color: #aebbb4; font-size: 13px; }
+.navigation { min-height: 60px; display: flex; align-items: center; justify-content: center; gap: 18px; }
+.navigation span { min-width: 52px; text-align: center; font: 12px/1 ui-monospace, monospace; }
+@supports (height: 100dvh) { .dialog { max-height: calc(100dvh - 32px); } .stage img, .stage video { max-height: calc(100dvh - 170px); } }
