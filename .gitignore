@@ -13,6 +13,11 @@ dist-ssr
 *.local
 playwright-report/
 test-results/
+.lighthouseci/
+.vercel/
+.vercel-preview-url.txt
+.vercel-production-url.txt
+.playwright-preview-stop
 
 # Editor directories and files
 .vscode/*
