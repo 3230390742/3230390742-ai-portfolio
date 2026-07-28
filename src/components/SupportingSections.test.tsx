@@ -1,8 +1,12 @@
 import { cleanup, render, screen } from '@testing-library/react'
-import { afterEach, describe, expect, it } from 'vitest'
+import userEvent from '@testing-library/user-event'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import App from '../App'
 
-afterEach(cleanup)
+afterEach(() => {
+  cleanup()
+  vi.restoreAllMocks()
+})
 
 describe('supporting portfolio sections', () => {
   it('renders three compact projects and honest role qualifiers', () => {
@@ -21,5 +25,25 @@ describe('supporting portfolio sections', () => {
     expect(screen.getByRole('link', { name: '发送邮件' })).toHaveAttribute('href', 'mailto:3230390742@qq.com')
     expect(screen.getByRole('link', { name: '访问 GitHub' })).toHaveAttribute('href', 'https://github.com/3230390742')
     expect(screen.queryByRole('form')).not.toBeInTheDocument()
+  })
+
+  it('copies the email address when no local mail client is available', async () => {
+    const user = userEvent.setup()
+    render(<App />)
+
+    await user.click(screen.getByRole('button', { name: '复制邮箱' }))
+
+    expect(await navigator.clipboard.readText()).toBe('3230390742@qq.com')
+    expect(screen.getByRole('status')).toHaveTextContent('邮箱已复制')
+  })
+
+  it('shows the address when clipboard permission is denied', async () => {
+    const user = userEvent.setup()
+    vi.spyOn(navigator.clipboard, 'writeText').mockRejectedValueOnce(new Error('permission denied'))
+    render(<App />)
+
+    await user.click(screen.getByRole('button', { name: '复制邮箱' }))
+
+    expect(screen.getByRole('status')).toHaveTextContent('请手动复制：3230390742@qq.com')
   })
 })

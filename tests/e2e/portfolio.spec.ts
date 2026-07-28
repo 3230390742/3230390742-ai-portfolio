@@ -82,9 +82,13 @@ test('project thumbnails preserve their complete source composition', async ({ p
   }))).toBe(true)
 })
 
-test('public contact and resume resources are valid', async ({ page, request }) => {
+test('public contact and resume resources are valid', async ({ page, request, context }) => {
+  await context.grantPermissions(['clipboard-read', 'clipboard-write'])
   await page.goto('/')
   await expect(page.getByRole('link', { name: '发送邮件' })).toHaveAttribute('href', 'mailto:3230390742@qq.com')
+  await page.getByRole('button', { name: '复制邮箱' }).click()
+  await expect(page.getByRole('status')).toHaveText('邮箱已复制，可粘贴到任意邮箱发送。')
+  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe('3230390742@qq.com')
   await expect(page.getByRole('link', { name: '访问 GitHub' })).toHaveAttribute('rel', /noreferrer/)
   const resume = await request.get('/resume/磨海清_AI应用工程实习简历.pdf')
   expect(resume.ok()).toBeTruthy()

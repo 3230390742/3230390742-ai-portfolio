@@ -10,7 +10,11 @@
 .contact .kicker { color: #b9d4c5; }
 .contact h2 { max-width: 820px; }
 .actions { display: flex; flex-wrap: wrap; gap: 12px; margin-top: 42px; }
-.actions a { min-height: 48px; display: inline-flex; align-items: center; gap: 10px; padding: 0 16px; border: 1px solid #789689; border-radius: var(--radius); text-decoration: none; }
+.actions a, .actions button { min-height: 48px; display: inline-flex; align-items: center; gap: 10px; padding: 0 16px; border: 1px solid #789689; border-radius: var(--radius); color: inherit; font: inherit; text-decoration: none; }
+.actions button { background: transparent; cursor: pointer; }
+.actions a:hover, .actions button:hover { border-color: #b9d4c5; background: rgb(255 255 255 / 8%); }
 .actions svg { width: 18px; }
+.contactHint, .copyStatus { margin: 14px 0 0; color: #b9d4c5; font-size: 14px; }
+.copyStatus { min-height: 21px; margin-top: 4px; color: white; }
 @media (min-width: 1248px) { .about { margin-left: auto; margin-right: auto; } .contact { padding-left: calc((100vw - var(--max-width)) / 2); padding-right: calc((100vw - var(--max-width)) / 2); } }
 @media (max-width: 760px) { .about { margin-left: 16px; margin-right: 16px; padding: 72px 0; grid-template-columns: 1fr; gap: 48px; } .about h2, .contact h2 { font-size: 36px; } .skills { grid-template-columns: 1fr; } .contact { padding: 72px 16px; } }
