@@ -9,6 +9,8 @@ test('social capture includes portfolio identity and a project cue', async ({ pa
 })
 
 test('captures a non-empty 1200×630 social image', async ({ page }) => {
+  test.skip(Boolean(process.env.PLAYWRIGHT_TEST_BASE_URL), 'Local artifact generation only')
+
   await page.setViewportSize({ width: 1200, height: 630 })
   await page.goto('/')
   await page.locator('header').evaluate((node) => { node.style.display = 'none' })

@@ -21,6 +21,22 @@ test('the first case-study cue is visible in the initial viewport', async ({ pag
   await expect(page.locator('#featured-work article').first().getByText('01 / FEATURED')).toBeInViewport()
 })
 
+test('desktop header links expose 44px pointer targets', async ({ page }, testInfo) => {
+  test.skip(testInfo.project.name.startsWith('mobile'), 'Desktop navigation only')
+
+  await page.goto('/')
+  const targetSizes = await page.locator('header a').evaluateAll((links) => links.map((link) => {
+    const bounds = link.getBoundingClientRect()
+    return { label: link.textContent?.trim(), width: bounds.width, height: bounds.height }
+  }))
+
+  expect(targetSizes.length).toBeGreaterThan(0)
+  for (const target of targetSizes) {
+    expect(target.width, `${target.label} target width`).toBeGreaterThanOrEqual(44)
+    expect(target.height, `${target.label} target height`).toBeGreaterThanOrEqual(44)
+  }
+})
+
 test('mobile navigation aligns with the compact header', async ({ page }, testInfo) => {
   test.skip(!testInfo.project.name.startsWith('mobile'), 'Mobile layout only')
 

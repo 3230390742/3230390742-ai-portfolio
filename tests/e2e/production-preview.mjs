@@ -4,7 +4,7 @@ import { resolve } from 'node:path'
 import { build, preview } from 'vite'
 
 const host = '127.0.0.1'
-const port = 4174
+const port = 4173
 const stopFile = resolve('.playwright-preview-stop')
 
 await rm(stopFile, { force: true })

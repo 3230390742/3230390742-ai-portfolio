@@ -1,9 +1,9 @@
 .header { position: sticky; top: 0; z-index: 40; height: var(--header-height); display: flex; align-items: center; justify-content: space-between; padding: 0 max(24px, calc((100vw - var(--max-width)) / 2)); border-bottom: 1px solid color-mix(in srgb, var(--line) 75%, transparent); background: color-mix(in srgb, var(--paper) 92%, transparent); backdrop-filter: blur(12px); transition: height 180ms ease; }
 .compact { height: 60px; }
-.brand { font-weight: 800; text-decoration: none; }
+.brand { min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; font-weight: 800; text-decoration: none; }
 .navigation, .navigationOpen { display: flex; align-items: center; gap: 24px; }
-.navigation a, .navigationOpen a { text-decoration: none; font-size: 14px; }
+.navigation a, .navigationOpen a { min-width: 44px; min-height: 44px; display: inline-flex; align-items: center; justify-content: center; padding: 0 6px; text-decoration: none; font-size: 14px; }
 .resume { display: inline-flex; align-items: center; gap: 7px; }
 .resume svg { width: 16px; }
 .menuButton { display: none; width: 44px; height: 44px; place-items: center; border: 0; background: transparent; }
-@media (max-width: 760px) { .header { padding: 0 16px; } .menuButton { display: grid; } .navigation { display: none; } .navigationOpen { position: absolute; left: 0; right: 0; top: var(--header-height); padding: 20px 16px 28px; display: grid; gap: 0; border-bottom: 1px solid var(--line); background: var(--paper); } .compact .navigationOpen { top: 60px; } .navigationOpen a { min-height: 48px; display: flex; align-items: center; justify-content: space-between; border-top: 1px solid var(--line); } }
+@media (max-width: 760px) { .header { padding: 0 16px; } .menuButton { display: grid; } .navigation { display: none; } .navigationOpen { position: absolute; left: 0; right: 0; top: var(--header-height); padding: 20px 16px 28px; display: grid; gap: 0; border-bottom: 1px solid var(--line); background: var(--paper); } .compact .navigationOpen { top: 60px; } .navigationOpen a { min-height: 48px; justify-content: space-between; padding: 0; border-top: 1px solid var(--line); } }

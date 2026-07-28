@@ -1,5 +1,6 @@
 import { expect, test } from '@playwright/test'
 
+test.skip(process.platform !== 'win32', 'Reviewed visual baselines target Windows Chromium')
 test.use({ reducedMotion: 'reduce' })
 
 test('matches the reviewed complete-page baseline', async ({ page }) => {

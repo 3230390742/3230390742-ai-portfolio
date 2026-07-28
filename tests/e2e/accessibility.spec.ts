@@ -18,3 +18,15 @@ test('skip link and dialog are keyboard operable', async ({ page }) => {
   await page.keyboard.press('Escape')
   await expect(page.getByRole('button', { name: /查看：AI research profile/ })).toBeFocused()
 })
+
+test('production styles honor reduced-motion preferences', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.goto('/')
+
+  await expect(page.locator('html')).toHaveCSS('scroll-behavior', 'auto')
+  const transitionDurationMs = await page.locator('header').evaluate((header) => {
+    const value = getComputedStyle(header).transitionDuration
+    return Number.parseFloat(value) * (value.endsWith('ms') ? 1 : 1000)
+  })
+  expect(transitionDurationMs).toBeLessThanOrEqual(0.01)
+})

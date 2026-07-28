@@ -9,14 +9,14 @@ export default defineConfig({
   reporter: [['list'], ['html', { open: 'never' }]],
   globalTeardown: './tests/e2e/stop-production-preview.mjs',
   use: {
-    baseURL: externalBaseUrl ?? 'http://127.0.0.1:4174',
+    baseURL: externalBaseUrl ?? 'http://127.0.0.1:4173',
     trace: 'retain-on-failure',
     screenshot: 'only-on-failure',
     video: 'retain-on-failure',
   },
   webServer: externalBaseUrl ? undefined : {
     command: 'node tests/e2e/production-preview.mjs',
-    url: 'http://127.0.0.1:4174',
+    url: 'http://127.0.0.1:4173',
     reuseExistingServer: false,
     timeout: 120_000,
   },
