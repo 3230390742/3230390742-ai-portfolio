@@ -3,7 +3,7 @@
 ## 本地开发
 
 ```powershell
-npm install
+npm ci
 npm run dev
 ```
 

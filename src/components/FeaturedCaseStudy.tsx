@@ -1,5 +1,8 @@
+import { ExternalLink } from 'lucide-react'
 import { useState } from 'react'
+import { agentReplay } from '../content/agentReplay'
 import type { CaseVisual, FeaturedProject } from '../content/types'
+import { AgentMcpReplay } from './AgentMcpReplay'
 import styles from './FeaturedCaseStudy.module.css'
 
 type OpenableVisual = Extract<CaseVisual, { kind: 'image' | 'video' }>
@@ -37,11 +40,14 @@ type FeaturedCaseStudyProps = {
 
 export function FeaturedCaseStudy({ project, index, onOpenMedia }: FeaturedCaseStudyProps) {
   return (
-    <article className={styles.caseStudy} aria-labelledby={`${project.id}-title`}>
+    <article className={styles.caseStudy} id={project.id} aria-labelledby={`${project.id}-title`}>
       <div className={styles.heading}>
         <p className={styles.number}>{String(index + 1).padStart(2, '0')} / FEATURED</p>
         <div>
-          <p className={styles.status}>{project.status}</p>
+          <div className={styles.statusRow}>
+            <p className={styles.status}>{project.status}</p>
+            <p className={styles.statusEvidence}>{project.verification.source}</p>
+          </div>
           <h3 id={`${project.id}-title`}>{project.title}</h3>
         </div>
         <div className={styles.meta}>
@@ -63,13 +69,17 @@ export function FeaturedCaseStudy({ project, index, onOpenMedia }: FeaturedCaseS
             )
           }
 
+          if (visual.kind === 'agent-replay') {
+            return <AgentMcpReplay key={visual.title} replay={agentReplay} />
+          }
+
           const label = visual.kind === 'image' ? visual.caption : visual.title
           return (
             <button
               className={styles.mediaButton}
               type="button"
               aria-label={`查看：${label}`}
-              key={visual.src}
+              key={visual.kind === 'image' ? visual.src : visual.poster}
               onClick={(event) => onOpenMedia?.(project, visualIndex, event.currentTarget)}
             >
               <ProjectThumbnail visual={visual} />
@@ -94,15 +104,39 @@ export function FeaturedCaseStudy({ project, index, onOpenMedia }: FeaturedCaseS
       </div>
       <dl className={styles.results}>
         {project.results.map((result) => (
-          <div key={result.label}>
-            <dt>{result.label}</dt>
+          <div className={styles.resultCard} key={result.label}>
+            <dt>
+              <span>{result.label}</span>
+              <span className={styles.resultSource}>{result.source}</span>
+            </dt>
             <dd>{result.value}</dd>
+            <dd className={styles.resultNote}>{result.note}</dd>
           </div>
         ))}
       </dl>
       <div className={styles.footer}>
         <ul aria-label="技术栈">{project.stack.map((item) => <li key={item}>{item}</li>)}</ul>
-        <p>{`证据：${project.evidence.join(' · ')}`}</p>
+        <div className={styles.footerAside}>
+          <p>{`证据：${project.evidence.join(' · ')}`}</p>
+          <p className={styles.verificationDetail}>
+            <span>运行状态</span>
+            {project.verification.runtimeStatus}
+          </p>
+          <p className={styles.verificationDetail}>
+            <span>公开边界</span>
+            {project.verification.publicBoundary}
+          </p>
+          {project.repositoryUrl && (
+            <a
+              className={styles.sourceLink}
+              href={project.repositoryUrl}
+              target="_blank"
+              rel="noreferrer"
+            >
+              查看源码 <ExternalLink aria-hidden="true" />
+            </a>
+          )}
+        </div>
       </div>
     </article>
   )

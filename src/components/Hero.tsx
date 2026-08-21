@@ -20,9 +20,11 @@ export function Hero({ person, metrics }: HeroProps) {
       </div>
       <dl className={styles.metrics} aria-label="代表成果">
         {metrics.map((metric) => (
-          <div data-testid="hero-metric" key={metric.label}>
+          <div className={styles.metricCard} data-testid="hero-metric" key={metric.label}>
             <dt>{metric.label}</dt>
             <dd>{metric.value}</dd>
+            <dd className={styles.metricSource}>{metric.source}</dd>
+            <dd className={styles.metricNote}>{metric.note}</dd>
           </div>
         ))}
       </dl>

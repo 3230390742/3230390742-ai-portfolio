@@ -1,0 +1,93 @@
+{
+  "comparison": {
+    "codex": {
+      "activity": {
+        "commands": 8,
+        "files": 0
+      },
+      "agent": "codex",
+      "durationMs": 75196,
+      "errors": [],
+      "finalMessage": "**Findings**\n\n[REDACTED]\n  - `page=\"\"` or whitespace becomes `0`, producing `offset: -20`.\n  - `page=1.5` produces `offset: 10`, breaking page alignment.\n  - `page=0`, negative pages, and non-positive `pageSize` are accepted.\n  - `abc`, `NaN`, or `Infinity` propagate non-finite values; JSON serialization can silently turn these into `null`.\n\n[REDACTED]\n\n- **Medium:** `ListRequest` provides compile-time typing only. At an HTTP boundary, `null`, arrays from duplicate query parameters, booleans, or objects can still arrive. Some coerce unexpectedly, while `null` input throws.\n\n**Recommended bounded contract**\n\n- Missing `page` defaults to `1`; missing `pageSize` defaults to `20`.\n[REDACTED]\n- Enforce `pageSize` from `1` through `100`.\n- Define a product-specific maximum page or offset, such as `page <= MAX_PAGE` and `offset <= MAX_OFFSET`.\n- Require `Number.isSafeInteger(page)`, `Number.isSafeInteger(pageSize)`, and a safe computed offset.\n- Reject malformed, repeated, blank, or out-of-range values with a consistent `400` response; do not clamp them or treat them as missing.\n\nNo tests are present. Table-driven coverage should include defaults, both bounds, values immediately outside each bound, blanks, whitespace, decimals, signs, exponent/hex notation, non-finite strings, duplicate parameters, and values above `Number.MAX_SAFE_INTEGER`. No files were modified.",
+      "status": "passed"
+    },
+    "note": "Results are shown without ranking; model output is not a benchmark.",
+    "opencode": {
+      "activity": {
+        "commands": 6,
+        "files": 0
+      },
+      "agent": "opencode",
+      "durationMs": 37162,
+      "errors": [],
+      "finalMessage": "以下是输入验证审查结果：\n\n---\n\n**文件 1:** `src/request.ts:1-7` — `parseListRequest`\n\n`Number()` 静默接受无法安全用于分页的值：\n\n| 输入值 | 结果 | 问题 |\n|---|---|---|\n| `page: \"\"` | `Number(\"\")` → `0` | 页码 `0` 无效（基于 1 的偏移量） |\n| `page: \"0\"` | `0` | 偏移量变为 `(0-1)*N = -N`（负值） |\n| `page: \"-5\"` | `-5` | 负偏移量 |\n| `pageSize: \"0\"` | `0` | `LIMIT 0` — 无意义 |\n| `pageSize: \"-1\"` | `-1` | SQL 不支持负 LIMIT |\n[REDACTED]\n| `pageSize: \"2.5\"` | `2.5` | 非整数 limit |\n| `pageSize: \"1e5\"` | `100000` | 可通过科学记数法绕过最大检查 |\n| `pageSize: \"0x10\"` | `16` | 十六进制解析 — 整数字段的非预期语法 |\n[REDACTED]\n\n**文件 2:** `src/handler.ts:3-5` — `handleList`\n\n`(page - 1) * pageSize` 是纯算术运算。当 `page` 或 `pageSize` 为 `NaN` 时，返回的 `{ offset: NaN, limit: NaN }` 会导致下游 SQL 或数组切片操作失败或行为异常。\n\n---\n\n**推荐的绑定验证（不变式）：**\n\n- `page` → 整数，范围 `[1, ∞)`，默认值 `1`\n- `pageSize` → 整数，范围 `[1, 100]`（或任何固定的上界），默认值 `20`\n\n对 `NaN`、`±Infinity`、非整数值、超出范围的值以及科学记数法的输入应尽早拒绝，最好在强制类型转换之前进行正则检查或使用 `Number.isInteger` + 范围守卫。README.md:8 中的中文评论已经正确指出了这一点。",
+      "status": "passed"
+    }
+  },
+  "environment": {
+    "codexAvailable": true,
+    "node": "v24.15.0",
+    "opencodeAvailable": true
+  },
+  "generatedAt": "2026-07-28T11:45:19.254Z",
+  "policy": {
+    "allowedRoot": "fixtures/public-demo",
+    "maxConcurrency": 2,
+    "maxOutputBytes": 1000000,
+    "shell": false,
+    "writeAllowed": false
+  },
+  "project": {
+    "name": "local-agent-mcp",
+    "repositoryUrl": "https://github.com/3230390742/local-agent-mcp",
+    "version": "1.0.0"
+  },
+  "scenario": {
+    "id": "api-input-validation-review",
+    "mode": "read_only",
+    "prompt": "Review the input validation in this small API fixture. Identify concrete edge cases and recommend bounded validation. Do not modify files.",
+    "title": "API 输入校验审查",
+    "workspaceLabel": "fixtures/public-demo"
+  },
+  "schemaVersion": 1,
+  "sourceRevision": "d8d0ed29e0743a54cb6e1cfacd1919caa66401be",
+  "stages": [
+    {
+      "detail": "Zod input accepted the fixed public scenario.",
+      "id": "validate",
+      "status": "passed"
+    },
+    {
+      "detail": "realpath matched fixtures/public-demo; write mode remained disabled.",
+      "id": "authorize",
+      "status": "passed"
+    },
+    {
+      "detail": "Codex and OpenCode completed independently under the concurrency limit.",
+      "id": "execute",
+      "status": "passed"
+    },
+    {
+      "detail": "CLI event streams were projected into typed run summaries.",
+      "id": "parse",
+      "status": "passed"
+    },
+    {
+      "detail": "Private paths, credentials, and session identifiers were removed.",
+      "id": "redact",
+      "status": "passed"
+    },
+    {
+      "detail": "The canonical manifest is ready for the fail-closed publication audit.",
+      "id": "publish",
+      "status": "passed"
+    }
+  ],
+  "verification": {
+    "testFilesPassed": 48,
+    "testFilesTotal": 48,
+    "testsPassed": 330,
+    "testsTotal": 330,
+    "typecheck": "passed"
+  }
+}

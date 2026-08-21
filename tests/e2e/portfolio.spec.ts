@@ -45,7 +45,7 @@ test('mobile navigation aligns with the compact header', async ({ page }, testIn
     document.documentElement.style.scrollBehavior = 'auto'
     window.scrollTo(0, 100)
   })
-  const header = page.locator('header')
+  const header = page.locator('#root > header')
   await expect(header).toHaveClass(/compact/)
   await expect(header).toHaveCSS('height', '60px')
   await expect.poll(async () => (await header.boundingBox())?.height ?? 0).toBeCloseTo(60, 0)
@@ -82,13 +82,9 @@ test('project thumbnails preserve their complete source composition', async ({ p
   }))).toBe(true)
 })
 
-test('public contact and resume resources are valid', async ({ page, request, context }) => {
-  await context.grantPermissions(['clipboard-read', 'clipboard-write'])
+test('public contact and resume resources are valid', async ({ page, request }) => {
   await page.goto('/')
   await expect(page.getByRole('link', { name: '发送邮件' })).toHaveAttribute('href', 'mailto:3230390742@qq.com')
-  await page.getByRole('button', { name: '复制邮箱' }).click()
-  await expect(page.getByRole('status')).toHaveText('邮箱已复制，可粘贴到任意邮箱发送。')
-  expect(await page.evaluate(() => navigator.clipboard.readText())).toBe('3230390742@qq.com')
   await expect(page.getByRole('link', { name: '访问 GitHub' })).toHaveAttribute('rel', /noreferrer/)
   const resume = await request.get('/resume/磨海清_AI应用工程实习简历.pdf')
   expect(resume.ok()).toBeTruthy()

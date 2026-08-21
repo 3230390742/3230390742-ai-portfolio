@@ -24,7 +24,7 @@ test('production styles honor reduced-motion preferences', async ({ page }) => {
   await page.goto('/')
 
   await expect(page.locator('html')).toHaveCSS('scroll-behavior', 'auto')
-  const transitionDurationMs = await page.locator('header').evaluate((header) => {
+  const transitionDurationMs = await page.locator('#root > header').evaluate((header) => {
     const value = getComputedStyle(header).transitionDuration
     return Number.parseFloat(value) * (value.endsWith('ms') ? 1 : 1000)
   })

@@ -13,7 +13,7 @@ test('captures a non-empty 1200×630 social image', async ({ page }) => {
 
   await page.setViewportSize({ width: 1200, height: 630 })
   await page.goto('/')
-  await page.locator('header').evaluate((node) => { node.style.display = 'none' })
+  await page.locator('#root > header').evaluate((node) => { node.style.display = 'none' })
   const hero = page.locator('main section').first()
   await hero.evaluate((node) => {
     const element = node as HTMLElement

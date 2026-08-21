@@ -1,0 +1,14 @@
+{
+  "checks": [
+    "schema",
+    "read_only",
+    "no_absolute_paths",
+    "no_credentials",
+    "no_session_ids",
+    "verification",
+    "source_revision"
+  ],
+  "manifestSha256": "ab40077d124a4681cf034f84045780f222c0a22b107561431d21c38edd043637",
+  "schemaVersion": 1,
+  "status": "PUBLICATION_OK"
+}

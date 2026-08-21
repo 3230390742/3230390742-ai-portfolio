@@ -23,7 +23,7 @@ export function SiteHeader({ person }: { person: PortfolioData['person'] }) {
 
   return (
     <header className={`${styles.header} ${scrolled ? styles.compact : ''}`}>
-      <a className={styles.brand} href="#main-content" aria-label="返回页面顶部">{person.name}</a>
+      <a className={styles.brand} href="#main-content">{person.name}</a>
       <button className={styles.menuButton} type="button" aria-expanded={open} aria-controls="site-navigation" onClick={() => setOpen((value) => !value)}>
         <span className="srOnly">{open ? '关闭导航' : '打开导航'}</span>
         {open ? <X aria-hidden="true" /> : <Menu aria-hidden="true" />}

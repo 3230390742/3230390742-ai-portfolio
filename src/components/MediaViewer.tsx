@@ -3,13 +3,13 @@ import { useEffect, useMemo, useRef, useState } from 'react'
 import type { CaseVisual, FeaturedProject } from '../content/types'
 import styles from './MediaViewer.module.css'
 
-type OpenableVisual = Exclude<CaseVisual, { kind: 'evidence' }>
+type OpenableVisual = Exclude<CaseVisual, { kind: 'evidence' } | { kind: 'agent-replay' }>
 
 export function MediaViewer({ project, initialIndex, onClose }: { project: FeaturedProject; initialIndex: number; onClose: () => void }) {
   const dialogRef = useRef<HTMLDialogElement>(null)
-  const media = useMemo(() => project.visuals.filter((visual): visual is OpenableVisual => visual.kind !== 'evidence'), [project.visuals])
+  const media = useMemo(() => project.visuals.filter((visual): visual is OpenableVisual => visual.kind !== 'evidence' && visual.kind !== 'agent-replay'), [project.visuals])
   const requested = project.visuals[initialIndex]
-  const startingIndex = requested.kind === 'evidence' ? 0 : Math.max(0, media.indexOf(requested))
+  const startingIndex = requested.kind === 'evidence' || requested.kind === 'agent-replay' ? 0 : Math.max(0, media.indexOf(requested))
   const [index, setIndex] = useState(startingIndex)
   const [mediaFailed, setMediaFailed] = useState(false)
   const current = media[index]
