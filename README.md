@@ -2,6 +2,8 @@
 
 一个以项目证据为核心的个人作品集，聚焦本地优先 RAG、Agent / MCP、React 与 FastAPI 产品交付。页面采用 React、TypeScript 和 Vite 构建，并针对桌面端与移动端提供自动化验证。
 
+在线访问：[http://20.196.222.189](http://20.196.222.189)
+
 ## 本地运行
 
 ```powershell
