@@ -1,3 +1,2 @@
 User-agent: *
 Allow: /
-Sitemap: https://3230390742-ai-portfolio.vercel.app/sitemap.xml

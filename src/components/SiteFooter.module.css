@@ -1,0 +1,16 @@
+.footer {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding: 30px max(24px, calc((100vw - var(--max-width)) / 2));
+  border-top: 1px solid rgb(255 255 255 / 10%);
+  background: #09060d;
+  color: var(--steel);
+  font: 700 11px/1.4 ui-monospace, monospace;
+  letter-spacing: .08em;
+}
+
+@media (max-width: 760px) {
+  .footer { padding: 26px 16px; }
+}

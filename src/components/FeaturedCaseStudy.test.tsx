@@ -1,11 +1,28 @@
 import { cleanup, fireEvent, render, screen } from '@testing-library/react'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import { portfolioData } from '../content/portfolio'
 import { FeaturedCaseStudy } from './FeaturedCaseStudy'
 
 afterEach(cleanup)
 
 describe('FeaturedCaseStudy', () => {
+  it('marks the project for cinematic styling and only prioritizes the first cover', () => {
+    const consoleError = vi.spyOn(console, 'error').mockImplementation(() => undefined)
+    const first = portfolioData.featuredProjects[0]
+    const third = portfolioData.featuredProjects[2]
+    const firstRender = render(<FeaturedCaseStudy project={first} index={0} />)
+
+    expect(firstRender.container.querySelector('article')).toHaveAttribute('data-project', 'personal-rag')
+    expect(firstRender.container.querySelector('img')).toHaveAttribute('loading', 'eager')
+
+    firstRender.unmount()
+    const laterRender = render(<FeaturedCaseStudy project={third} index={2} />)
+
+    expect(laterRender.container.querySelectorAll('img')[0]).toHaveAttribute('loading', 'lazy')
+    expect(consoleError).not.toHaveBeenCalled()
+    consoleError.mockRestore()
+  })
+
   it('renders the narrative, status, results, and evidence', () => {
     const project = portfolioData.featuredProjects[0]
     const image = project.visuals.find((visual) => visual.kind === 'image')

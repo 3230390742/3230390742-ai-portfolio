@@ -1,4 +1,4 @@
-import { Download, ExternalLink, Mail } from 'lucide-react'
+import { Download, ExternalLink } from 'lucide-react'
 import type { PortfolioData } from '../content/types'
 import styles from './AboutContact.module.css'
 
@@ -23,7 +23,6 @@ export function AboutContact({ data }: { data: PortfolioData }) {
       <p className={styles.kicker}>OPEN TO AI APPLICATION INTERNSHIPS</p>
       <h2 id="contact-heading">一起把 AI 做成真正可用的产品。</h2>
       <div className={styles.actions}>
-        <a href={`mailto:${data.person.email}`}>发送邮件 <Mail aria-hidden="true" /></a>
         <a href={data.person.githubUrl} target="_blank" rel="noreferrer">访问 GitHub <ExternalLink aria-hidden="true" /></a>
         <a href={data.person.resumeUrl} download>下载中文简历 <Download aria-hidden="true" /></a>
       </div>

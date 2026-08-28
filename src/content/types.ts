@@ -62,7 +62,6 @@ export interface PortfolioData {
     role: string
     headline: string
     introduction: string
-    email: string
     githubUrl: string
     resumeUrl: string
   }

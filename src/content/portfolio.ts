@@ -5,21 +5,21 @@ export const portfolioData: PortfolioData = {
   person: {
     name: '磨海清',
     role: 'RAG / Agent 应用工程实习生',
-    headline: '把 AI 原型做成可验证的产品。',
-    introduction: '专注本地优先 RAG、Agent 与 AI 全栈应用，从检索质量推进到桌面交付。',
-    email: '3230390742@qq.com',
+    headline: '让 AI 原型真正成为产品。',
+    introduction: '专注本地优先 RAG、Agent 与 AI 全栈应用，把复杂系统做成可运行、可验证、可交付的体验。',
     githubUrl: 'https://github.com/3230390742',
     resumeUrl: '/resume/磨海清_AI应用工程实习简历.pdf',
   },
   heroMetrics: [
-    { value: '3,827', label: '知识分块', source: '内容模型声明', note: '本轮未独立运行' },
-    { value: '0.084s', label: '启动扫描', source: '内容模型声明', note: '本轮未独立运行' },
+    { value: '06', label: '项目案例', source: '本次审查结论', note: '4 个重点 + 2 个精简' },
+    { value: '04', label: '重点案例', source: '本次审查结论', note: '问题、决策、结果与证据' },
     {
       value: `${agentReplay.verification.testsPassed}/${agentReplay.verification.testsTotal}`,
       label: 'MCP 测试记录',
       source: '历史运行产物',
       note: '本轮未重跑',
     },
+    { value: 'RAG', label: '核心方向', source: '本次审查结论', note: '本地优先 · Agent · AI 全栈' },
   ],
   featuredProjects: [
     {

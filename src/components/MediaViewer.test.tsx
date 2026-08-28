@@ -17,8 +17,9 @@ describe('MediaViewer', () => {
     const onClose = vi.fn()
     render(<MediaViewer project={portfolioData.featuredProjects[0]} initialIndex={2} onClose={onClose} />)
 
-    expect(screen.getByRole('dialog', { name: '个人 RAG 知识库媒体' })).toBeVisible()
-    expect(screen.getByTitle('个人 RAG 知识库演示')).not.toHaveAttribute('autoplay')
+    expect(screen.getByRole('dialog', { name: 'Personal RAG Desktop媒体' })).toBeVisible()
+    expect(screen.getByTitle('Personal RAG Desktop 演示')).toHaveAttribute('preload', 'metadata')
+    expect(screen.getByTitle('Personal RAG Desktop 演示')).not.toHaveAttribute('autoplay')
 
     fireEvent.keyDown(document, { key: 'Escape' })
 

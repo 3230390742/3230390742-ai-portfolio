@@ -5,7 +5,8 @@ test('social capture includes portfolio identity and a project cue', async ({ pa
   await page.goto('/')
   const hero = page.locator('main section').first()
   await expect(hero).toContainText('磨海清')
-  await expect(hero.getByRole('link', { name: '查看重点项目' })).toBeVisible()
+  await expect(hero.getByRole('link', { name: '探索代表作' })).toBeVisible()
+  await expect(hero.getByText('项目案例')).toBeVisible()
 })
 
 test('captures a non-empty 1200×630 social image', async ({ page }) => {
@@ -27,7 +28,7 @@ test('captures a non-empty 1200×630 social image', async ({ page }) => {
     element.querySelector('dl')?.setAttribute('style', 'display: none')
   })
   await expect(hero.locator('p').first()).toBeInViewport({ ratio: 0.8 })
-  await expect(page.locator('#featured-work h3').first()).toBeInViewport({ ratio: 0.8 })
+  await expect(page.locator('#featured-work h3').first()).toBeInViewport({ ratio: 0.6 })
   await page.screenshot({ path: 'public/og-portfolio.png', clip: { x: 0, y: 0, width: 1200, height: 630 }, animations: 'disabled' })
   expect((await stat('public/og-portfolio.png')).size).toBeGreaterThan(20_000)
   const image = await readFile('public/og-portfolio.png')

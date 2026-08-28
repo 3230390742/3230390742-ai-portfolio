@@ -78,9 +78,15 @@ describe('portfolioData', () => {
 
   it('keeps the approved public identity and contact links', () => {
     expect(portfolioData.person.name).toBe('磨海清')
-    expect(portfolioData.person.email).toBe('3230390742@qq.com')
     expect(portfolioData.person.githubUrl).toBe('https://github.com/3230390742')
     expect(portfolioData.person.resumeUrl).toBe('/resume/磨海清_AI应用工程实习简历.pdf')
+    expect('email' in portfolioData.person).toBe(false)
+    expect(portfolioData.heroMetrics.map((metric) => metric.label)).toEqual([
+      '项目案例',
+      '重点案例',
+      'MCP 测试记录',
+      '核心方向',
+    ])
   })
 
   it('publishes the audited Agent replay totals without stale counters', () => {

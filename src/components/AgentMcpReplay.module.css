@@ -18,13 +18,13 @@
 .prompt { padding: 12px; border-left: 3px solid var(--steel); background: var(--forest-soft); }
 .stages, .checks { margin: 0; padding: 0; list-style: none; }
 .stages li { display: grid; grid-template-columns: 20px 130px minmax(0, 1fr); gap: 8px; padding: 9px 0; border-bottom: 1px solid var(--line); }
-.stages svg { width: 16px; height: 16px; margin-top: 2px; color: var(--forest); }
+.stages svg { width: 16px; height: 16px; margin-top: 2px; color: var(--signal); }
 .stages p { margin: 0; color: var(--muted); }
 .split { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1px; background: var(--line); }
 .split > section { min-width: 0; padding: 16px; background: var(--surface); }
 .agentHeading { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
 .agentHeading h5 { margin: 0; font-size: 1rem; }
-.agentHeading span { font-family: ui-monospace, monospace; color: var(--forest); }
+.agentHeading span { font-family: ui-monospace, monospace; color: var(--signal); }
 .activity { grid-template-columns: repeat(3, minmax(0, 1fr)); margin-top: 14px; }
 .message { white-space: pre-wrap; overflow-wrap: anywhere; }
 .note { margin: 14px 0 0; color: var(--muted); }
@@ -35,7 +35,7 @@
 .auditSummary span { margin-top: 4px; color: var(--muted); }
 .checks { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 18px; }
 .checks li { min-width: 0; display: flex; align-items: center; gap: 8px; overflow-wrap: anywhere; }
-.checks svg { width: 15px; height: 15px; flex: 0 0 auto; color: var(--forest); }
+.checks svg { width: 15px; height: 15px; flex: 0 0 auto; color: var(--signal); }
 @media (max-width: 640px) {
   .header { align-items: flex-start; }
   .tabs button { padding: 6px; font-size: .78rem; }

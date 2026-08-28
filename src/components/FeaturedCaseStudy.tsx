@@ -7,7 +7,7 @@ import styles from './FeaturedCaseStudy.module.css'
 
 type OpenableVisual = Extract<CaseVisual, { kind: 'image' | 'video' }>
 
-function ProjectThumbnail({ visual }: { visual: OpenableVisual }) {
+function ProjectThumbnail({ visual, priority }: { visual: OpenableVisual; priority: boolean }) {
   const [failed, setFailed] = useState(false)
   const label = visual.kind === 'image' ? visual.caption : visual.title
 
@@ -26,7 +26,8 @@ function ProjectThumbnail({ visual }: { visual: OpenableVisual }) {
       alt={visual.kind === 'image' ? visual.alt : ''}
       width="1440"
       height="900"
-      loading="eager"
+      loading={priority ? 'eager' : 'lazy'}
+      fetchPriority={priority ? 'high' : 'auto'}
       onError={() => setFailed(true)}
     />
   )
@@ -40,7 +41,7 @@ type FeaturedCaseStudyProps = {
 
 export function FeaturedCaseStudy({ project, index, onOpenMedia }: FeaturedCaseStudyProps) {
   return (
-    <article className={styles.caseStudy} id={project.id} aria-labelledby={`${project.id}-title`}>
+    <article className={styles.caseStudy} id={project.id} data-project={project.id} aria-labelledby={`${project.id}-title`}>
       <div className={styles.heading}>
         <p className={styles.number}>{String(index + 1).padStart(2, '0')} / FEATURED</p>
         <div>
@@ -79,10 +80,10 @@ export function FeaturedCaseStudy({ project, index, onOpenMedia }: FeaturedCaseS
               className={styles.mediaButton}
               type="button"
               aria-label={`查看：${label}`}
-              key={visual.kind === 'image' ? visual.src : visual.poster}
+              key={`${visual.kind}:${visual.kind === 'image' ? visual.src : visual.poster}:${visualIndex}`}
               onClick={(event) => onOpenMedia?.(project, visualIndex, event.currentTarget)}
             >
-              <ProjectThumbnail visual={visual} />
+              <ProjectThumbnail visual={visual} priority={index === 0 && visualIndex === 0} />
               <span>{label}</span>
             </button>
           )

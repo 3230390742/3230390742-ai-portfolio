@@ -2,23 +2,23 @@ import { expect, test } from '@playwright/test'
 
 test('critical portfolio flow works without horizontal overflow', async ({ page }, testInfo) => {
   await page.goto('/')
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('把 AI 原型做成可验证的产品。')
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('让 AI 原型真正成为产品。')
   if (testInfo.project.name.startsWith('mobile')) {
     await page.getByRole('button', { name: '打开导航' }).click()
   }
-  await page.getByRole('navigation', { name: '主要导航' }).getByRole('link', { name: '重点项目' }).click()
+  await page.getByRole('navigation', { name: '主要导航' }).getByRole('link', { name: '作品' }).click()
   await expect(page.locator('#featured-work')).toBeInViewport()
   await page.getByRole('button', { name: /查看：AI research profile/ }).click()
-  await expect(page.getByRole('dialog', { name: '个人 RAG 知识库媒体' })).toBeVisible()
+  await expect(page.getByRole('dialog', { name: 'Personal RAG Desktop媒体' })).toBeVisible()
   await page.keyboard.press('Escape')
   await expect(page.getByRole('dialog')).toHaveCount(0)
   const overflow = await page.evaluate(() => document.documentElement.scrollWidth - document.documentElement.clientWidth)
   expect(overflow).toBeLessThanOrEqual(1)
 })
 
-test('the first case-study cue is visible in the initial viewport', async ({ page }) => {
+test('the cinematic hero action is visible in the initial viewport', async ({ page }) => {
   await page.goto('/')
-  await expect(page.locator('#featured-work article').first().getByText('01 / FEATURED')).toBeInViewport()
+  await expect(page.getByRole('link', { name: '探索代表作' })).toBeInViewport()
 })
 
 test('desktop header links expose 44px pointer targets', async ({ page }, testInfo) => {
@@ -69,7 +69,10 @@ test('mobile navigation aligns with the compact header', async ({ page }, testIn
 test('audited project thumbnails load before visual review', async ({ page }) => {
   await page.goto('/')
   const thumbnails = page.getByRole('button', { name: /查看：(桌面|手机)视口/ }).locator('img')
-  await expect.poll(async () => thumbnails.evaluateAll((images) => images.every((image) => image.complete && image.naturalWidth > 0))).toBe(true)
+  for (const thumbnail of await thumbnails.all()) {
+    await thumbnail.scrollIntoViewIfNeeded()
+    await expect.poll(async () => thumbnail.evaluate((image) => image.complete && image.naturalWidth > 0)).toBe(true)
+  }
 })
 
 test('project thumbnails preserve their complete source composition', async ({ page }) => {
@@ -84,10 +87,20 @@ test('project thumbnails preserve their complete source composition', async ({ p
 
 test('public contact and resume resources are valid', async ({ page, request }) => {
   await page.goto('/')
-  await expect(page.getByRole('link', { name: '发送邮件' })).toHaveAttribute('href', 'mailto:3230390742@qq.com')
+  await expect(page.locator('a[href^="mailto:"]')).toHaveCount(0)
   await expect(page.getByRole('link', { name: '访问 GitHub' })).toHaveAttribute('rel', /noreferrer/)
   const resume = await request.get('/resume/磨海清_AI应用工程实习简历.pdf')
   expect(resume.ok()).toBeTruthy()
   expect(resume.headers()['content-type']).toContain('application/pdf')
   expect((await resume.body()).byteLength).toBeGreaterThan(10_000)
+})
+
+test('reduced motion removes nonessential animation', async ({ page }) => {
+  await page.emulateMedia({ reducedMotion: 'reduce' })
+  await page.goto('/')
+  const durationMs = await page.locator('[data-testid="cinematic-orbit"]').evaluate((element) => {
+    const duration = getComputedStyle(element).animationDuration
+    return duration.endsWith('ms') ? Number.parseFloat(duration) : Number.parseFloat(duration) * 1000
+  })
+  expect(durationMs).toBeLessThanOrEqual(.1)
 })

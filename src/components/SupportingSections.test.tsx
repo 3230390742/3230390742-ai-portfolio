@@ -19,11 +19,12 @@ describe('supporting portfolio sections', () => {
     expect(within(compactProjects[1]).getAllByText('本轮未重跑')).toHaveLength(2)
   })
 
-  it('exposes direct contact actions without a form', () => {
+  it('exposes only the approved public contact actions without a form', () => {
     render(<App />)
 
-    expect(screen.getByRole('link', { name: '发送邮件' })).toHaveAttribute('href', 'mailto:3230390742@qq.com')
     expect(screen.getByRole('link', { name: '访问 GitHub' })).toHaveAttribute('href', 'https://github.com/3230390742')
+    expect(screen.getAllByRole('link', { name: /简历/ }).some((link) => link.hasAttribute('download'))).toBe(true)
     expect(screen.queryByRole('form')).not.toBeInTheDocument()
+    expect(document.querySelector('a[href^="mailto:"]')).not.toBeInTheDocument()
   })
 })

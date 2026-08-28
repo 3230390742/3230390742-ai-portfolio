@@ -15,8 +15,8 @@ export function SiteHeader({ person }: { person: PortfolioData['person'] }) {
   }, [])
 
   const links = [
-    ['重点项目', '#featured-work'],
-    ['其他项目', '#more-work'],
+    ['作品', '#featured-work'],
+    ['项目', '#more-work'],
     ['关于', '#about'],
     ['联系', '#contact'],
   ] as const
